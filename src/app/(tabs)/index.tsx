@@ -1,23 +1,35 @@
 import { Image, StyleSheet, Platform } from 'react-native';
+import { useEffect } from 'react';
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { HelloWave } from '@/src/components/HelloWave';
+import ParallaxScrollView from '@/src/components/ParallaxScrollView';
+import { ThemedText } from '@/src/components/ThemedText';
+import { ThemedView } from '@/src/components/ThemedView';
+import { getPosts } from '@/src/services/api/methods';
 
 export default function HomeScreen() {
+	useEffect(() => {
+		getPosts()
+			.then((res) => {
+				console.log(res);
+			})
+			.catch((e) => {
+				console.error(e);
+			});
+	}, []);
+
 	return (
 		<ParallaxScrollView
 			headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
 			headerImage={
 				<Image
-					source={require('@/assets/images/partial-react-logo.png')}
+					source={require('@/src/assets/images/partial-react-logo.png')}
 					style={styles.reactLogo}
 				/>
 			}
 		>
 			<ThemedView style={styles.titleContainer}>
-				<ThemedText type="title">Welcome!xx</ThemedText>
+				<ThemedText type="title">Welcome!x</ThemedText>
 				<HelloWave />
 			</ThemedView>
 			<ThemedView style={styles.stepContainer}>
