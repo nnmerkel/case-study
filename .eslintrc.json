@@ -25,6 +25,9 @@
 		"@typescript-eslint/no-unused-vars": "error",
 		"no-shadow": "off",
 		"@typescript-eslint/no-shadow": "error",
+		"@typescript-eslint/no-require-imports": ["error", {
+			"allow": ["/assets/"]
+		}],
 		"@typescript-eslint/consistent-type-exports": [
 			"warn",
 			{
