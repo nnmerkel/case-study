@@ -1,21 +1,17 @@
 import { Image, StyleSheet, Platform } from 'react-native';
 import { useEffect } from 'react';
 
-import { HelloWave } from '@/src/components/HelloWave';
 import ParallaxScrollView from '@/src/components/ParallaxScrollView';
 import { ThemedText } from '@/src/components/ThemedText';
 import { ThemedView } from '@/src/components/ThemedView';
-import { getPosts } from '@/src/services/api/methods';
+import Post from '@/src/components/Post';
+import usePosts from '@/src/hooks/usePosts';
 
 export default function HomeScreen() {
+	const { fetchPosts, posts } = usePosts();
+
 	useEffect(() => {
-		getPosts()
-			.then((res) => {
-				console.log(res);
-			})
-			.catch((e) => {
-				console.error(e);
-			});
+		fetchPosts();
 	}, []);
 
 	return (
@@ -29,8 +25,10 @@ export default function HomeScreen() {
 			}
 		>
 			<ThemedView style={styles.titleContainer}>
-				<ThemedText type="title">Welcome!x</ThemedText>
-				<HelloWave />
+				<ThemedText type="title">r/pics</ThemedText>
+				{posts.map((post, i) => (
+					<Post {...post} key={i} />
+				))}
 			</ThemedView>
 			<ThemedView style={styles.stepContainer}>
 				<ThemedText type="subtitle">Step 1: Try it</ThemedText>
@@ -68,12 +66,12 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
 	titleContainer: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		gap: 8,
+		// flexDirection: 'row',
+		// alignItems: 'center',
+		// gap: 8,
 	},
 	stepContainer: {
-		gap: 8,
+		// gap: 8,
 		marginBottom: 8,
 	},
 	reactLogo: {
