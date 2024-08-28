@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, StyleSheet } from 'react-native';
-import { formatDistance, formatRelative } from 'date-fns';
+import { formatDistance } from 'date-fns';
 
 import { ThemedView } from '../ThemedView';
 import { ThemedText } from '../ThemedText';
