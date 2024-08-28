@@ -17,5 +17,6 @@ export interface IRedditPost extends IRedditThing {
 	title: string;
 	score: number;
 	num_comments: number;
-	created: string;
+	created: number;
+	created_utc: number;
 }

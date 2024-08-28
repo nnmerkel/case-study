@@ -5,7 +5,13 @@ import { useThemeColor } from '@/src/hooks/useThemeColor';
 export type ThemedTextProps = TextProps & {
 	lightColor?: string;
 	darkColor?: string;
-	type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
+	type?:
+		| 'default'
+		| 'title'
+		| 'defaultSemiBold'
+		| 'subtitle'
+		| 'link'
+		| 'small';
 };
 
 export function ThemedText({
@@ -17,20 +23,7 @@ export function ThemedText({
 }: ThemedTextProps) {
 	const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
-	return (
-		<Text
-			style={[
-				{ color },
-				type === 'default' ? styles.default : undefined,
-				type === 'title' ? styles.title : undefined,
-				type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
-				type === 'subtitle' ? styles.subtitle : undefined,
-				type === 'link' ? styles.link : undefined,
-				style,
-			]}
-			{...rest}
-		/>
-	);
+	return <Text style={[{ color }, getStylesByType(type), style]} {...rest} />;
 }
 
 const styles = StyleSheet.create({
@@ -52,9 +45,25 @@ const styles = StyleSheet.create({
 		fontSize: 20,
 		fontWeight: 'bold',
 	},
+	small: {
+		fontSize: 13,
+		fontWeight: '400',
+	},
 	link: {
 		lineHeight: 30,
 		fontSize: 16,
 		color: '#0a7ea4',
 	},
 });
+
+const getStylesByType = (type: ThemedTextProps['type']) => {
+	if (type === undefined) return;
+
+	const target = styles[type];
+
+	if (target === undefined) {
+		return styles.default;
+	}
+
+	return target;
+};
