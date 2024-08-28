@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { Link } from 'expo-router';
 
 import { ThemedView } from '@/src/components/ThemedView';
 import Post from '@/src/components/Post';
@@ -36,7 +37,9 @@ export default function PostFeed() {
 	return (
 		<ThemedView>
 			{posts.map((post, i) => (
-				<Post {...post} key={i} />
+				<Link href={`/post/${post.id}`} key={i}>
+					<Post {...post} />
+				</Link>
 			))}
 		</ThemedView>
 	);

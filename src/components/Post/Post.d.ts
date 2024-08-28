@@ -10,9 +10,10 @@ interface IRedditThing<T> {
 	data: T;
 }
 
-export interface IRedditPost extends IRedditThing {
+export interface IRedditPost {
 	id: string;
 	thumbnail: string;
+	url: string;
 	author: string;
 	title: string;
 	score: number;
