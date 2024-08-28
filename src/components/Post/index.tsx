@@ -19,6 +19,10 @@ import type { IRedditPost } from './Post';
 // 		});
 // };
 
+const isImgUrl = (url: string): boolean => {
+	return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+};
+
 const formatDate = (input: number): string => {
 	// reddit post `created` and `created_utc` UNIX timestamps are in seconds so we need to multiply by 1000 for js dates
 	return formatDistance(new Date(input * 1000), new Date(), {});
@@ -31,7 +35,10 @@ function Post({
 	score,
 	thumbnail,
 	title,
+	url,
 }: IRedditPost) {
+	const hasFullSizeImg = isImgUrl(url);
+
 	return (
 		<ThemedView style={styles.wrapper}>
 			<ThemedView style={styles.row}>
@@ -49,8 +56,8 @@ function Post({
 			<ThemedView style={styles.imgWrapper}>
 				<Image
 					accessible={false}
-					source={{ uri: thumbnail }}
-					style={styles.thumbnail}
+					source={{ uri: hasFullSizeImg ? url : thumbnail }}
+					style={hasFullSizeImg ? styles.img : styles.thumbnail}
 					resizeMode="contain"
 				/>
 			</ThemedView>
@@ -77,6 +84,7 @@ const styles = StyleSheet.create({
 		paddingTop: 16,
 		marginBottom: 16,
 		alignItems: 'stretch',
+		width: '100%',
 	},
 	header: {
 		marginTop: 8,
@@ -85,6 +93,12 @@ const styles = StyleSheet.create({
 	imgWrapper: {
 		width: '100%',
 		marginBottom: 12,
+	},
+	img: {
+		width: '100%',
+		paddingBottom: '56.75%',
+		backgroundColor: '#000',
+		borderRadius: 8,
 	},
 	author: {},
 	created: {
